@@ -1,0 +1,35 @@
+.TH HSH 1 "August, 2025" "Simple Shell" "User Commands"
+.SH NAME
+hsh - simple shell program
+.SH SYNOPSIS
+.B hsh
+[\fIOPTION\fR]... [\fICOMMAND\fR]
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command interpreter that reads commands from either a file or standard input and executes them.
+.PP
+When invoked without arguments,
+.B hsh
+reads commands interactively from the terminal.
+.SH OPTIONS
+.TP
+.B --help
+display this help and exit
+.SH EXIT STATUS
+Exits with status of last command executed, or 0 if no command was executed.
+.SH EXAMPLES
+.TP
+Run in interactive mode:
+.B hsh
+.TP
+Execute single command:
+.B echo "ls" | hsh
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Written by Valentin T., Yanis L. and Mélissa S, Holberton's School students.
+.SH COPYRIGHT
+Copyright © Year Holberton School. License MIT.
+.SH "SEE ALSO"
+.BR bash (1),
+.BR sh (1)
