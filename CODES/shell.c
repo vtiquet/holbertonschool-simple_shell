@@ -28,7 +28,7 @@ char *find_in_path(char *cmd)
 		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
 		if (full_path)
 		{
-			sprintf(full_path, "%s/%s", dir, cmd);
+			printf(full_path, "%s/%s", dir, cmd);
 			if (stat(full_path, &st) == 0)
 			{
 				free(path_copy);
