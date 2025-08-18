@@ -10,13 +10,9 @@
 
 ---
 
-**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
-
 ## 📚 Description
 
 ---
-
-**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
 
 ## How to clone this repos
 
@@ -32,15 +28,11 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
 ---
 
-**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
-
 ## How to execute the simple shell function
 
 ./hsh
 
 ---
-
-**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
 
 ## General requirements
 
@@ -64,6 +56,5 @@ man ./man_1_simple_shell.1
 
 ---
 
-**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
 
 ## Flowchart
