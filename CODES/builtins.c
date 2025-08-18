@@ -54,8 +54,9 @@ int shell_help(char **args)
 	printf("Simple Shell Help\n");
 	printf("Built-in commands:\n");
 	printf("  cd          Change directory\n");
-	printf("  help        Display this help\n");
 	printf("  exit        Exit the shell\n");
+	printf("  help        Display this help\n");
+	printf("  ls          Diplay directory contents\n");
 	return (1);
 }
 
