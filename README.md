@@ -1,63 +1,60 @@
-🚀 README - Simple Shell Project
+<p align="center">
+	<img src= "https://raw.githubusercontent.com/vtiquet/holbertonschool-simple_shell/81ac78caaed0e26ffed123a942892531f18d39b1/holberton.png">
+</p>
 
-📛 Title
+## TOP
 
-hsh - Holberton Simple Shell
+# simple_shell
 
-📝 Description
+## Table of contents
 
-This project is a minimalist UNIX command interpreter written in C, replicating basic shell functionalities like ls, env, help, cd or exit. It handles both interactive and non-interactive modes.
+---
 
-🛠 Requirements
+## 📚 Description
 
-Compiler: gcc 9.4.0 or higher
+---
 
-Authorized Functions:
+## How to clone this repos
 
-c
-access, chdir, close, execve, exit, fork, free, 
-getline, malloc, open, opendir, read, readdir, 
-signal, stat, wait, write, isatty, getcwd
+https://github.com/vtiquet/holbertonschool-simple_shell.git
 
-🔧 Compilation
+---
 
-bash
-gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
 
-🔄 What the Shell Returns
+## How to compile the simple-shell function
 
-Returns 0 on successful execution
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
-Returns 1 on error or invalid command
+---
 
-Returns 127 when command not found
+## How to execute the simple shell function
 
-💡 Examples
+./hsh
+
+---
+
+## General requirements
+
+Allowed editors: vi, vim, emacs
+All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
+All your files should end with a new line
+A README.md file, at the root of the folder of the project is mandatory
+Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
+Your shell should not have any memory leaks
+No more than 5 functions per file
+All your header files should be include guarded
+Use system calls only when you need to (why?)
+
+---
+
+**[TOP](https://github.com/vtiquet/holbertonschool-simple_shell.git)**
+
+## 🧪 Execute command Man page
+
+man ./man_1_simple_shell.1 
+
+---
 
 
-Interactive Mode:
-bash
-$ ./hsh
-($) ls
-file1 file2 file3
-($) exit
-
-Non-Interactive Mode (with pipe):
-bash
-echo "ls -l" | ./hsh
-
-📖 Man Page Execution
-
-bash
-man ./man_1_simple_shell
-
-🔍 Memory Leak Check
-
-bash
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./hsh
-
-🐛 Known Bugs
-
-Potential memory leaks in command parsing when interrupted by signals
-
-Minor leak in environment variable handling (about 32 bytes)
+## Flowchart
