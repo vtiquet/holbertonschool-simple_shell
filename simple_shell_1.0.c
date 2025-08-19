@@ -57,15 +57,15 @@ static void process_line(char *line, char **argv)
 	}
 
 	builtin_result = handle_builtin(cmd);
-	if (builtin_result == 1) /* Regular builtin handled */
+	if (builtin_result == 1)
 	{
 		free_command(cmd);
 		return;
 	}
-	else if (builtin_result == 2) /* Exit command */
+	else if (builtin_result == 2)
 	{
 		free_command(cmd);
-		free(line); /* Free the line buffer before exiting */
+		free(line);
 		exit(0);
 	}
 
@@ -87,7 +87,6 @@ static int execute_shell_command(command_t *cmd, char **argv)
 	int status;
 	char *full_path = NULL;
 
-	/* Check if the command is a full path */
 	if (access((*cmd).cmd, X_OK) == 0)
 	{
 		full_path = _strdup((*cmd).cmd);
