@@ -57,14 +57,15 @@ static void process_line(char *line, char **argv)
 	}
 
 	builtin_result = handle_builtin(cmd);
-	if (builtin_result == 1)
+	if (builtin_result == 1) /* Regular builtin handled */
 	{
 		free_command(cmd);
 		return;
 	}
-	else if (builtin_result == 2)
+	else if (builtin_result == 2) /* Exit command */
 	{
 		free_command(cmd);
+		free(line); /* Free the line buffer before exiting */
 		exit(0);
 	}
 
@@ -82,14 +83,23 @@ static void process_line(char *line, char **argv)
 */
 static int execute_shell_command(command_t *cmd, char **argv)
 {
-	char *full_path = NULL;
 	pid_t child_pid;
 	int status;
+	char *full_path = NULL;
 
-	full_path = find_command_in_path(cmd->cmd);
+	/* Check if the command is a full path */
+	if (access((*cmd).cmd, X_OK) == 0)
+	{
+		full_path = _strdup((*cmd).cmd);
+	}
+	else
+	{
+		full_path = find_command_in_path((*cmd).cmd);
+	}
+
 	if (full_path == NULL)
 	{
-		fprintf(stderr, "%s: 1: %s: not found\n", argv[0], cmd->cmd);
+		fprintf(stderr, "%s: 1: %s: not found\n", argv[0], (*cmd).cmd);
 		return (-1);
 	}
 
@@ -103,8 +113,8 @@ static int execute_shell_command(command_t *cmd, char **argv)
 
 	if (child_pid == 0)
 	{
-		execve(full_path, cmd->args, environ);
-		perror("Error: execve failed");
+		execve(full_path, (*cmd).args, environ);
+		perror(argv[0]);
 		free(full_path);
 		exit(EXIT_FAILURE);
 	}
@@ -124,11 +134,11 @@ static int execute_shell_command(command_t *cmd, char **argv)
 */
 int handle_builtin(command_t *cmd)
 {
-	if (strcmp(cmd->cmd, "exit") == 0)
+	if (_strcmp((*cmd).cmd, "exit") == 0)
 	{
 		return (2);
 	}
-	else if (strcmp(cmd->cmd, "env") == 0)
+	else if (_strcmp((*cmd).cmd, "env") == 0)
 	{
 		int i = 0;
 
@@ -139,7 +149,7 @@ int handle_builtin(command_t *cmd)
 		}
 		return (1);
 	}
-	else if (strcmp(cmd->cmd, "help") == 0)
+	else if (_strcmp((*cmd).cmd, "help") == 0)
 	{
 		print_help();
 		return (1);

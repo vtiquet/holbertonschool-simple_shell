@@ -1,10 +1,11 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -22,14 +23,19 @@ typedef struct command_s
 	char **args;
 } command_t;
 
-int main(int argc, char **argv);
+command_t *parse_command(char *line);
+void free_command(command_t *cmd);
 int handle_builtin(command_t *cmd);
 void print_help(void);
-
 char *_getenv(const char *name);
 char *find_command_in_path(char *command);
 
-command_t *parse_command(char *line);
-void free_command(command_t *cmd);
+char *_strtok(char *str, const char *delim);
+char *_strcpy(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+int _strlen(const char *s);
+char *_strdup(const char *str);
+char *_strcat(char *dest, const char *src);
+int _strncmp(const char *s1, const char *s2, size_t n);
 
 #endif /* SHELL_H */

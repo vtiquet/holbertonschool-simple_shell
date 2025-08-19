@@ -1,35 +1,6 @@
 #include "shell.h"
 
 /**
-* count_tokens - a function that counts the number of tokens in a string.
-* @str: the string to tokenize.
-* @delim: the delimiter string.
-* Return: the number of tokens.
-*/
-static int count_tokens(char *str, const char *delim)
-{
-	int count = 0;
-	char *str_copy;
-	char *token;
-
-	if (str == NULL || *str == '\0')
-		return (0);
-
-	str_copy = strdup(str);
-	if (!str_copy)
-		return (0);
-
-	token = strtok(str_copy, delim);
-	while (token)
-	{
-		count++;
-		token = strtok(NULL, delim);
-	}
-	free(str_copy);
-	return (count);
-}
-
-/**
 * parse_command - a function tha splits a string into a command_t struct.
 * @line: the string to parse.
 * Return: a pointer to the command_t struct, or NULL on failure.
@@ -38,36 +9,70 @@ command_t *parse_command(char *line)
 {
 	command_t *cmd;
 	char *token;
-	int num_tokens, i = 0;
+	int i = 0, count = 0;
+	char **args;
+	char *line_copy;
 
-	if (line == NULL || *line == '\0')
+	if (!line || *line == '\0')
 		return (NULL);
 
-	num_tokens = count_tokens(line, " \t");
-	if (num_tokens == 0)
+	line_copy = _strdup(line);
+	if (!line_copy)
+		return (NULL);
+
+	token = _strtok(line_copy, " \t\n");
+	while (token)
+	{
+		count++;
+		token = _strtok(NULL, " \t\n");
+	}
+	free(line_copy);
+
+	if (count == 0)
 		return (NULL);
 
 	cmd = malloc(sizeof(command_t));
 	if (!cmd)
 		return (NULL);
 
-	(*cmd).args = malloc(sizeof(char *) * (num_tokens + 1));
-	if (!(*cmd).args)
+	args = malloc(sizeof(char *) * (count + 1));
+	if (!args)
 	{
 		free(cmd);
 		return (NULL);
 	}
 
-	token = strtok(line, " \t");
-	(*cmd).cmd = token;
-
-	while (token)
+	token = _strtok(line, " \t\n");
+	if (token)
 	{
-		(*cmd).args[i] = token;
-		token = strtok(NULL, " \t");
+		args[i] = _strdup(token);
+		if (!args[i])
+		{
+			free(args);
+			free(cmd);
+			return (NULL);
+		}
 		i++;
 	}
-	(*cmd).args[i] = NULL;
+
+	while ((token = _strtok(NULL, " \t\n")))
+	{
+		args[i] = _strdup(token);
+		if (!args[i])
+		{
+			while (i > 0)
+				free(args[--i]);
+			free(args);
+			free(cmd);
+			return (NULL);
+		}
+		i++;
+	}
+
+	(*cmd).cmd = args[0];
+	(*cmd).args = args;
+	args[i] = NULL;
+	
 	return (cmd);
 }
 
@@ -78,10 +83,15 @@ command_t *parse_command(char *line)
 */
 void free_command(command_t *cmd)
 {
-	if (cmd != NULL)
+	int i;
+	if (cmd)
 	{
-		if ((*cmd).args != NULL)
+		if ((*cmd).args)
 		{
+			for (i = 0; (*cmd).args[i]; i++)
+			{
+				free((*cmd).args[i]);
+			}
 			free((*cmd).args);
 		}
 		free(cmd);

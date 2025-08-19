@@ -1,7 +1,5 @@
 #include "shell.h"
 
-static char *check_path_dirs(char *path_env, char *command);
-
 /**
 * _getenv - a function that gets an environment variable value.
 * @name: the name of the environment variable.
@@ -10,16 +8,17 @@ static char *check_path_dirs(char *path_env, char *command);
 char *_getenv(const char *name)
 {
 	int i = 0;
-	size_t len = strlen(name);
-
-	if (!name || !environ)
-		return (NULL);
+	char *env_var;
+	size_t name_len = _strlen(name);
 
 	while (environ[i])
 	{
-		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
+		env_var = environ[i];
+
+		if (_strncmp(env_var, (char *)name, name_len)
+			== 0 && env_var[name_len] == '=')
 		{
-			return (&environ[i][len + 1]);
+			return (&env_var[name_len + 1]);
 		}
 		i++;
 	}
@@ -34,66 +33,43 @@ char *_getenv(const char *name)
 char *find_command_in_path(char *command)
 {
 	char *path_env = _getenv("PATH");
-	char *full_path;
+	char *path_copy, *dir, *full_path;
 	struct stat st;
 
-	if (command == NULL)
-		return (NULL);
-
-	if (strchr(command, '/') != NULL)
+	if (path_env == NULL || command == NULL)
 	{
-		if (stat(command, &st) == 0 && (st.st_mode & S_IXUSR))
-		{
-			return (strdup(command));
-		}
 		return (NULL);
 	}
 
-	if (!path_env)
-		return (NULL);
-
-	full_path = check_path_dirs(path_env, command);
-
-	return (full_path);
-}
-
-/**
-* check_path_dirs - a function that iterates
-* through PATH directories to find a command.
-* @path_env: the PATH environment variable string.
-* @command: the command name.
-* Return: the full path to the command, or NULL if not found.
-*/
-static char *check_path_dirs(char *path_env, char *command)
-{
-	char *path_copy = strdup(path_env);
-	char *dir;
-	char *full_path;
-	struct stat st;
-
-	if (!path_copy)
-		return (NULL);
-
-	dir = strtok(path_copy, ":");
-	while (dir)
+	path_copy = _strdup(path_env);
+	if (path_copy == NULL)
 	{
-		full_path = malloc(strlen(dir) + strlen(command) + 2);
-		if (!full_path)
+		return (NULL);
+	}
+
+	dir = _strtok(path_copy, ":");
+	while (dir != NULL)
+	{
+		full_path = malloc(_strlen(dir) + _strlen(command) + 2);
+		if (full_path == NULL)
 		{
 			free(path_copy);
 			return (NULL);
 		}
-		sprintf(full_path, "%s/%s", dir, command);
+		_strcpy(full_path, dir);
+		_strcat(full_path, "/");
+		_strcat(full_path, command);
 
-		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		if (stat(full_path, &st) == 0)
 		{
 			free(path_copy);
 			return (full_path);
 		}
 
 		free(full_path);
-		dir = strtok(NULL, ":");
+		dir = _strtok(NULL, ":");
 	}
+
 	free(path_copy);
 	return (NULL);
 }
