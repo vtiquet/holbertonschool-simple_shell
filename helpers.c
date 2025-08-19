@@ -1,5 +1,7 @@
 #include "shell.h"
 
+int command_count = 1;
+
 /**
  * shell_read_line - Reads input line
  * Return: Pointer to the line
@@ -16,6 +18,8 @@ char *shell_read_line(void)
 	{
 		if (feof(stdin))
 		{
+			if (isatty(STDIN_FILENO))
+				printf("\n");
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
@@ -70,9 +74,10 @@ char **shell_split_line(char *line)
  * shell_execute - Execute a command with args
  * @args: Array of args
  * @shell_name: Name for error messages
+ * @cmd_count: Command counter for error messages
  * Return: 1 to continue, 0 to exit
  */
-int shell_execute(char **args, char *shell_name)
+int shell_execute(char **args, char *shell_name, int cmd_count)
 {
 	pid_t pid;
 	int status;
@@ -89,7 +94,7 @@ int shell_execute(char **args, char *shell_name)
 	full_path = find_in_path(args[0]);
 	if (!full_path)
 	{
-		fprintf(stderr, "%s: command not found\n", shell_name);
+		fprintf(stderr, "%s: %d: %s: not found\n", shell_name, cmd_count, args[0]);
 		return (1);
 	}
 
@@ -98,7 +103,7 @@ int shell_execute(char **args, char *shell_name)
 	{
 		if (execve(full_path, args, environ) == -1)
 		{
-			fprintf(stderr, "%s: execution error\n", shell_name);
+			fprintf(stderr, "%s: %d: %s: execution failed\n", shell_name, cmd_count, args[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

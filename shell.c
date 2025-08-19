@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	char **args = NULL;
 	int status = 1;
+	int command_count = 1;
 	(void)argc;
 
 	while (status)
@@ -44,7 +45,7 @@ int main(int argc, char **argv)
 
 		args = shell_split_line(line);
 		if (args)
-			status = shell_execute(args, argv[0]);
+			status = shell_execute(args, argv[0], command_count++);
 	}
 
 	cleanup(&line, &args);

@@ -11,7 +11,7 @@
 #define BUFSIZE 1024
 #define TOK_BUFSIZE 64
 #define TOK_DELIM " \t\r\n\a"
-#define PROMPT "#cisfun$ "
+#define PROMPT "$ "
 
 extern char **environ;
 
@@ -30,7 +30,7 @@ typedef struct builtin_s
 
 char *shell_read_line(void);
 char **shell_split_line(char *line);
-int shell_execute(char **args, char *shell_name);
+int shell_execute(char **args, char *shell_name, int cmd_count);
 
 char *find_in_path(char *cmd);
 
