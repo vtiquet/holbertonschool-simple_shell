@@ -1,0 +1,52 @@
+.TH HSH 1 "JULY 2025" "Holberton School" "User Commands"
+
+.SH NAME
+hsh \- simple UNIX command interpreter
+
+.SH SYNOPSIS
+.B hsh
+.B [command_file]
+
+.SH DESCRIPTION
+.B hsh
+is a minimal implementation of a UNIX shell with basic functionality.
+
+.TP
+.B Features:
+- Command execution
+- Built-in commands (exit, env, cd)
+- PATH handling
+- Signal handling (Ctrl+C)
+
+.TP
+.B Interactive Mode:
+Reads commands from stdin
+
+.TP
+.B Non-Interactive Mode:
+Executes commands from a file or pipe
+
+.SH PARAMETERS
+.IP command_file
+Optional file containing commands to execute
+
+.SH RETURN VALUE
+Returns 0 on success, 1 on error, 127 for command not found
+
+.SH EXAMPLE
+.EX
+$ ./hsh
+(hsh) ls *.c
+main.c shell.c utils.c
+(hsh) exit
+.EE
+
+.SH AUTHOR
+Written by Holberton School students
+
+.SH SEE ALSO
+sh(1), bash(1)
+
+.SH COPYRIGHT
+This is free software for educational purposes.
+(c) 2025 Holberton School
