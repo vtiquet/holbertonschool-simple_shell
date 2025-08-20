@@ -84,13 +84,12 @@ int shell_execute(char **args, char *shell_name, int cmd_count)
 	if (builtin_status != -1)
 		return (builtin_status);
 
-	full_path = find_in_path(args[0]);
+	full_path = get_path(args[0]);
 	if (!full_path)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", shell_name, cmd_count, args[0]);
 		return (1);
 	}
-
 	pid = fork();
 	if (pid == 0)
 	{
@@ -112,6 +111,5 @@ int shell_execute(char **args, char *shell_name, int cmd_count)
 		waitpid(pid, &status, 0);
 		free(full_path);
 	}
-
 	return (1);
 }
