@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int command_count = 1;
-
 /**
  * shell_read_line - Reads input line
  * Return: Pointer to the line
@@ -16,15 +14,8 @@ char *shell_read_line(void)
 
 	if (nread == -1)
 	{
-		if (feof(stdin))
-		{
-			if (isatty(STDIN_FILENO))
-				printf("\n");
-			free(line);
-			exit(EXIT_SUCCESS);
-		}
-		perror("readline");
-		exit(EXIT_FAILURE);
+		free(line);
+		return (NULL);
 	}
 
 	if (nread > 0 && line[nread - 1] == '\n')
@@ -42,7 +33,7 @@ char **shell_split_line(char *line)
 {
 	int bufsize = TOK_BUFSIZE, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char *));
-	char *token, *saveptr;
+	char *token;
 
 	if (!tokens)
 	{
@@ -50,10 +41,12 @@ char **shell_split_line(char *line)
 		exit(EXIT_FAILURE);
 	}
 
-	token = strtok_r(line, TOK_DELIM, &saveptr);
+	token = strtok(line, TOK_DELIM);
 	while (token)
 	{
-		tokens[position++] = token;
+		tokens[position] = token;
+		position++;
+
 		if (position >= bufsize)
 		{
 			bufsize += TOK_BUFSIZE;
@@ -64,7 +57,7 @@ char **shell_split_line(char *line)
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = strtok_r(NULL, TOK_DELIM, &saveptr);
+		token = strtok(NULL, TOK_DELIM);
 	}
 	tokens[position] = NULL;
 	return (tokens);
@@ -103,40 +96,22 @@ int shell_execute(char **args, char *shell_name, int cmd_count)
 	{
 		if (execve(full_path, args, environ) == -1)
 		{
-			fprintf(stderr, "%s: %d: %s: execution failed\n", shell_name, cmd_count, args[0]);
+			perror(shell_name);
+			free(full_path);
 			exit(EXIT_FAILURE);
 		}
 	}
 	else if (pid < 0)
 	{
 		perror("fork");
+		free(full_path);
+		return (1);
 	}
 	else
 	{
-		waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, &status, 0);
+		free(full_path);
 	}
 
-	free(full_path);
 	return (1);
-}
-
-/**
- * _strdup - Duplicate a string
- * @str: String to duplicate
- * Return: New string
- */
-char *_strdup(const char *str)
-{
-	char *new;
-	size_t len;
-
-	if (str == NULL)
-	return (NULL);
-
-	len = strlen(str) + 1;
-	new = malloc(len);
-	if (new)
-		memcpy(new, str, len);
-
-	return (new);
 }
