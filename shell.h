@@ -34,6 +34,7 @@ int shell_execute(char **args, char *shell_name, int cmd_count);
 
 char *find_in_path(char *cmd);
 
+char *get_path(char *command)
 int shell_cd(char **args);
 int shell_help(char **args);
 int shell_exit(char **args);
