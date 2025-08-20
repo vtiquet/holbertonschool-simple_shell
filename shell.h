@@ -1,56 +1,43 @@
-/**
- * cleanup - Free resources and reset pointers
- * @line: Pointer to input line
- * @args: Pointer to arguments array
- */
-static void cleanup(char **line, char ***args)
-{
-	if (*line)
-	{
-		free(*line);
-		*line = NULL;
-	}
-	if (*args)
-	{
-		free(*args);
-		*args = NULL;
-	}
-}
+#ifndef SHELL_H_
+#define SHELL_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+
+#define BUFSIZE 1024
+#define TOK_BUFSIZE 64
+#define TOK_DELIM " \t\r\n\a"
+#define PROMPT ":) "
+
+extern char **environ;
 
 /**
- * main - Entry point of simple shell
- * @argc: Argument count (unused)
- * @argv: Argument vector
- * Return: Exit status
+ * struct builtin_s - Builtin command structure
+ * @name: Name of the builtin command
+ * @func: Pointer to the builtin function
+ *
+ * Description: Links a builtin name to its handler function.
  */
-int main(int argc, char **argv)
+typedef struct builtin_s
 {
-	char *line = NULL;
-	char **args = NULL;
-	int status = 1;
-	int command_count = 0;
-	(void)argc;
+	char *name;
+	int (*func)(char **);
+} builtin_t;
 
-	while (status)
-	{
-		command_count++;
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
+char *shell_read_line(void);
+char **shell_split_line(char *line);
+int shell_execute(char **args, char *shell_name, int cmd_count);
+char *find_in_path(char *cmd);
+char *get_path(char *command);
 
-		cleanup(&line, &args);
-		line = shell_read_line();
-		if (!line)
-			break;
+int shell_cd(char **args);
+int shell_help(char **args);
+int shell_exit(char **args);
+int shell_env(char **args);
+int shell_execute_builtin(char **args);
 
-		args = shell_split_line(line);
-		if (!args || !args[0])
-			continue;
-
-		status = shell_execute(args, argv[0], command_count);
-		if (status == 0)
-		break;
-	}
-
-	cleanup(&line, &args);
-	return (0);
-}
+#endif /* SHELL_H_ */
