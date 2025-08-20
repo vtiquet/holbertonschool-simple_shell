@@ -49,6 +49,8 @@ int main(int argc, char **argv)
 			continue;
 
 		status = shell_execute(args, argv[0], command_count);
+		if (status == 0)
+		break;
 	}
 
 	cleanup(&line, &args);
