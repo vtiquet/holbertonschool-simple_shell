@@ -1,40 +1,41 @@
-#ifndef SHELL_H_
-#define SHELL_H_
+#ifndef SHELL_H
+#define SHELL_H
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-
-#define BUFSIZE 1024
-#define TOK_BUFSIZE 64
-#define TOK_DELIM " \t\r\n\a"
-#define PROMPT "$ "
 
 extern char **environ;
 
 /**
- * struct builtin_s - Builtin command structure
- * @name: Name of the builtin command
- * @func: Pointer to the builtin function
- */
-typedef struct builtin_s
+* struct command_s - a struct that parse command and its arguments.
+* @cmd: the command.
+* @args: the arguments.
+*/
+typedef struct command_s
 {
-	char *name;
-	int (*func)(char **);
-} builtin_t;
+	char *cmd;
+	char **args;
+} command_t;
 
-char *shell_read_line(void);
-char **shell_split_line(char *line);
-int shell_execute(char **args, char *shell_name, int cmd_count);
-char *find_in_path(char *cmd);
+command_t *parse_command(char *line);
+void free_command(command_t *cmd);
+int handle_builtin(command_t *cmd);
+void print_help(void);
+char *_getenv(const char *name);
+char *find_command_in_path(char *command);
 
-int shell_env(char **args);
-int shell_exit(char **args);
-int shell_cd(char **args);
-int shell_help(char **args);
-int shell_execute_builtin(char **args);
+char *_strtok(char *str, const char *delim);
+char *_strcpy(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+int _strlen(const char *s);
+char *_strdup(const char *str);
+char *_strcat(char *dest, const char *src);
+int _strncmp(const char *s1, const char *s2, size_t n);
 
-#endif /** SHELL_H_ */
+#endif /* SHELL_H */
