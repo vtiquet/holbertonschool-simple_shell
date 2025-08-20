@@ -37,8 +37,10 @@ int main(int argc, char **argv)
 	{
 		command_count++;
 		if (isatty(STDIN_FILENO))
+		{
 			write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
-
+			fflush(stdout);
+		}
 		cleanup(&line, &args);
 		line = shell_read_line();
 		if (!line)
