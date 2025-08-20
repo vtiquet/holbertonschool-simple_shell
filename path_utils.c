@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "path_utils.h"
 
 /**
  * find_in_path - Finds command in PATH
