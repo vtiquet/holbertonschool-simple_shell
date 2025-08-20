@@ -10,14 +10,8 @@ int shell_env(char **args)
 	int i;
 	(void)args;
 
-	if (!environ)
-	{
-		fprintf(stderr, "Environment not found\n");
-		return (1);
-	}
-
 	for (i = 0; environ[i]; i++)
-		puts(environ[i]);
+		printf("%s\n", environ[i]);
 
 	return (1);
 }
@@ -29,17 +23,23 @@ int shell_env(char **args)
  */
 int shell_cd(char **args)
 {
+	char cwd[1024];
+
 	if (args[1] == NULL)
 	{
 		fprintf(stderr, "hsh: expected argument to \"cd\"\n");
-		return (-1);
+		return (1);
 	}
 
 	if (chdir(args[1]) != 0)
 	{
 		perror("hsh");
-		return (-1);
+		return (1);
 	}
+
+	if (getcwd(cwd, sizeof(cwd)))
+		setenv("PWD", cwd, 1);
+
 	return (1);
 }
 
@@ -56,7 +56,7 @@ int shell_help(char **args)
 	printf("  cd          Change directory\n");
 	printf("  exit        Exit the shell\n");
 	printf("  help        Display this help\n");
-	printf("  ls          Diplay directory contents\n");
+	printf("  env         Print environment\n");
 	return (1);
 }
 

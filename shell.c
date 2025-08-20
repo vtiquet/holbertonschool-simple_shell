@@ -30,13 +30,14 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	char **args = NULL;
 	int status = 1;
-	int command_count = 1;
+	int command_count = 0;
 	(void)argc;
 
 	while (status)
 	{
+		command_count++;
 		if (isatty(STDIN_FILENO))
-			printf(PROMPT);
+			write(STDOUT_FILENO, PROMPT, 2);
 
 		cleanup(&line, &args);
 		line = shell_read_line();
@@ -44,10 +45,12 @@ int main(int argc, char **argv)
 			break;
 
 		args = shell_split_line(line);
-		if (args)
-			status = shell_execute(args, argv[0], command_count++);
+		if (!args || !args[0])
+			continue;
+
+		status = shell_execute(args, argv[0], command_count);
 	}
 
 	cleanup(&line, &args);
-	return (EXIT_SUCCESS);
+	return (0);
 }
