@@ -72,8 +72,8 @@ char **shell_split_line(char *line)
  */
 int shell_execute(char **args, char *shell_name, int cmd_count)
 {
-	char *full_path = find_in_path(args[0]);
-    pid_t pid;
+	char *full_path = NULL;
+	pid_t pid;
 	int wstatus;
 
 	if (is_builtin(args[0]))
@@ -81,7 +81,8 @@ int shell_execute(char **args, char *shell_name, int cmd_count)
 		return (shell_execute_builtin(args));
 	}
 
-	if (!full_path)
+	full_path = find_in_path(args[0]);
+	if (full_path == NULL)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", shell_name, cmd_count, args[0]);
 		return (1);

@@ -62,13 +62,17 @@ int shell_help(char **args)
 
 /**
  * shell_exit - Exit the shell
- * @args: Arguments (unused)
- * Return: 0 to terminate shell
+ * @args: Arguments
+ * Return: 0 to terminate shell, or 1 to stay in shell
  */
 int shell_exit(char **args)
 {
-	(void)args;
-	return (0);
+	if (args[1] != NULL)
+	{
+		fprintf(stderr, "exit: too many arguments\n");
+		return (1);
+	}
+	exit(0);
 }
 
 /**
