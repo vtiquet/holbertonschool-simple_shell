@@ -1,4 +1,3 @@
-````markdown
 <p align="center">
    <img src="https://github.com/vtiquet/holbertonschool-printf/blob/main/Holberton-Logo.svg" width=40% height=40%/>
 </p>
