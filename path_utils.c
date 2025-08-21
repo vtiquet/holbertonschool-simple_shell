@@ -65,7 +65,7 @@ char *get_path(char *command)
 			return (strdup(command));
 		return (NULL);
 	}
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	if (!path)
 		return (NULL);
 
@@ -95,5 +95,23 @@ char *get_path(char *command)
 		dir = strtok(NULL, ":");
 	}
 	free(path_copy);
+	return (NULL);
+}
+
+/**
+ * _getenv - Get environment variable value
+ * @name: Name of the environment variable
+ * Return: Value of the environment variable or NULL
+ */
+char *_getenv(const char *name)
+{
+	int i;
+	char **env = environ;
+
+	for (i = 0; env[i]; i++)
+	{
+		if (strncmp(env[i], name, strlen(name)) == 0 && env[i][strlen(name)] == '=')
+			return (env[i] + strlen(name) + 1);
+	}
 	return (NULL);
 }
