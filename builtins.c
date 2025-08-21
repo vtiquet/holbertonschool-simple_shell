@@ -61,18 +61,25 @@ int shell_help(char **args)
 }
 
 /**
- * shell_exit - Exit the shell
- * @args: Arguments
- * Return: 0 to terminate shell, or 1 to stay in shell
+ * shell_exit - Exit the shell.
+ * @args: Arguments.
+ * Return: The exit status or 1 if an error occurred.
  */
 int shell_exit(char **args)
 {
-	if (args[1] != NULL)
+	int status = 0;
+	
+	if (args[1])
 	{
-		fprintf(stderr, "./hsh: exit: too many arguments\n");
-		return (1);
+		status = atoi(args[1]);
+		if (status == 0 && strcmp(args[1], "0") != 0)
+		{
+			fprintf(stderr, "hsh: 1: exit: Illegal number: %s\n", args[1]);
+			return (1);
+		}
+		return (status);
 	}
-	exit(0);
+	return (0);
 }
 
 /**
