@@ -69,7 +69,7 @@ int shell_exit(char **args)
 {
 	if (args[1] != NULL)
 	{
-		fprintf(stderr, "exit: too many arguments\n");
+		fprintf(stderr, "./hsh: exit: too many arguments\n");
 		return (1);
 	}
 	exit(0);
