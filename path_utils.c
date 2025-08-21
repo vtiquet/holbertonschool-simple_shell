@@ -116,14 +116,20 @@ char *get_path(char *command)
 	return (NULL);
 }
 
+/**
+ * is_builtin - checks if a command is a builtin
+ * @cmd: The command to check
+ * Return: 1 if builtin, 0 otherwise
+ */
+int is_builtin(char *cmd)
 {
-	int i;
-	char **env = environ;
-
-	for (i = 0; env[i]; i++)
+	if (strcmp(cmd, "exit") == 0 ||
+		strcmp(cmd, "env") == 0 ||
+		strcmp(cmd, "cd") == 0 ||
+		strcmp(cmd, "help") == 0)
 	{
-		if (strncmp(env[i], name, strlen(name)) == 0 && env[i][strlen(name)] == '=')
-			return (env[i] + strlen(name) + 1);
+		return 1;
 	}
-	return (NULL);
+	return 0;
 }
+

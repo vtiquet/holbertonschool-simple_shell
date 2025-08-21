@@ -72,19 +72,15 @@ char **shell_split_line(char *line)
  */
 int shell_execute(char **args, char *shell_name, int cmd_count)
 {
-	pid_t pid;
-	int status;
-	char *full_path;
-	int builtin_status;
+	char *full_path = find_in_path(args[0]);
+    pid_t pid;
+	int wstatus;
 
-	if (!args[0])
-		return (1);
+	if (is_builtin(args[0]))
+	{
+		return (shell_execute_builtin(args));
+	}
 
-	builtin_status = shell_execute_builtin(args);
-	if (builtin_status != -1)
-		return (builtin_status);
-
-	full_path = get_path(args[0]);
 	if (!full_path)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", shell_name, cmd_count, args[0]);
@@ -94,23 +90,20 @@ int shell_execute(char **args, char *shell_name, int cmd_count)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(full_path, args, environ) == -1)
-		{
-			perror(shell_name);
-			free(full_path);
-			exit(EXIT_FAILURE);
-		}
+		execve(full_path, args, environ);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
-	else if (pid < 0)
+	else if (pid > 0)
+	{
+		waitpid(pid, &wstatus, 0);
+		free(full_path);
+		return (WEXITSTATUS(wstatus));
+	}
+	else
 	{
 		perror("fork");
 		free(full_path);
 		return (1);
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		free(full_path);
-	}
-	return (1);
 }

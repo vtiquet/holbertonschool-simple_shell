@@ -38,6 +38,7 @@ int shell_cd(char **args);
 int shell_help(char **args);
 int shell_exit(char **args);
 int shell_env(char **args);
+int is_builtin(char *cmd);
 int shell_execute_builtin(char **args);
 
 #endif /* SHELL_H_ */
