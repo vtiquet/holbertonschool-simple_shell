@@ -59,7 +59,7 @@ The project uses a specific set of allowed functions, including those for memory
 
 -----
 
-## 📊 Flowchart et Snippets
+## 📊 Flowchart & Snippets
 
 ### Flowchart
 
