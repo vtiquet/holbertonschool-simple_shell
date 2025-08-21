@@ -1,0 +1,66 @@
+.TH hsh 1 "22nd August 2025" "1.0" "hsh man page"
+.SH NAME
+hsh \- a simple UNIX command interpreter
+.SH SYNOPSIS
+.B #include "shell.h"
+.SH DESCRIPTION
+.B hsh
+is a simple command language interpreter that reads commands from standard
+input or a file and executes them. It mimics some of the functionality of
+the standard UNIX shell.
+.PP
+In interactive mode,
+.B hsh
+displays a prompt ($) and waits for a command line to be entered.
+.PP
+In non-interactive mode,
+.B hsh
+executes commands from a specified file. It does not display a prompt.
+.SH BUILT-IN COMMANDS
+The following built-in commands are available:
+.TP
+.B exit
+Exits the shell, optionally with a status of
+.I n.
+.TP
+.B env
+Prints the current environment to standard output.
+.TP
+.B ls
+List directory contents
+.TP
+.B help
+Provides information about the shell and its built-in commands.
+.SH ENVIRONMENT
+.TP
+.B PATH
+The shell uses the
+.B PATH
+environment variable to find executable commands. The directories in
+.B PATH
+are searched in the order they appear.
+.TP
+.B PROMPT
+The shell uses the
+.B PROMPT
+environment variable to customize the prompt string.
+.SH EXAMPLES
+The following is an example of a echo command:
+.PP
+.nf
+echo "hello, world"
+.fi
+.PP
+This would produce the output:
+.PP
+.nf
+hello, world
+.fi
+.SH AUTHORS
+Written by Mélissa SBIBIH, Valentin TIQUET, and Yanis LEROY.
+All students at Holberton School.
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR ls (1),
+.BR exit (3)
