@@ -57,7 +57,7 @@ This would produce the output:
 hello, world
 .fi
 .SH RETURN VALUE
-Le programme renvoie les codes de sortie suivants :
+The programme returns the following exit codes :
 .TP
 .B 0
 For success.
