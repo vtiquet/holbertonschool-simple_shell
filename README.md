@@ -119,6 +119,11 @@ direction LR
 - Test Valgrind
 <img src="https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/Valgrind1.png" width=40% height=40%>
 
+- Show man page
+```bash
+$ man ./man_1_simple_shell
+```
+
 -----
 
 ## ✨ Features
