@@ -11,7 +11,7 @@ This project is a custom implementation of a simple UNIX command line interprete
 ## Table of Contents
 - [Project Description](#-project-description)
 - [Requirements](#-requirements)
-- [Flowchart et Snippets](#-flowchart-et-snippets)
+- [Flowchart & Snippets](#-flowchart-&-snippets)
 - [Features](#-features)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
