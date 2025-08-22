@@ -53,6 +53,7 @@ int shell_help(char **args)
 	(void)args;
 	printf("Simple Shell Help\n");
 	printf("Built-in commands:\n");
+	printf("  cd          Change directory\n");
 	printf("  ls          List directory contents\n");
 	printf("  exit        Exit the shell\n");
 	printf("  help        Display this help\n");
@@ -68,7 +69,7 @@ int shell_help(char **args)
 int shell_exit(char **args)
 {
 	int status = 0;
-	
+
 	if (args[1])
 	{
 		status = atoi(args[1]);

@@ -15,6 +15,7 @@ This project is a custom implementation of a simple UNIX command line interprete
 - [Features](#-features)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
+- [Return](#-return)
 - [Authors](#-authors)
 
 ---
@@ -177,6 +178,17 @@ $
   - [path_utils.h](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/path_utils.h): A file containing function prototypes and include guards for the path_utils.c file.
   - [shell.c](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/shell.c): The main function for the shell.
   - [shell.h](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/shell.h): A file containing function prototypes and include guards for most of the *.c files.
+  
+  ---
+
+## ↩ Return
+
+  - 0: For success.
+  - 1: For error.
+  - 127: If the command doesn't exist.
+  - 126: The command exist but is not executable.
+  - -1: For error linked to the fork().
+
 
 -----
 
