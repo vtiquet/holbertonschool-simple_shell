@@ -56,6 +56,23 @@ This would produce the output:
 .nf
 hello, world
 .fi
+.SH RETURN VALUE
+Le programme renvoie les codes de sortie suivants :
+.TP
+.B 0
+For success.
+.TP
+.B 1
+For error.
+.TP
+.B 126
+The command exist but is not executable.
+.TP
+.B 127
+If the command doesn't exist.
+.TP
+.B -1
+For error linked to the fork().
 .SH AUTHORS
 Written by Mélissa SBIBIH, Valentin TIQUET, and Yanis LEROY.
 All students at Holberton School.
