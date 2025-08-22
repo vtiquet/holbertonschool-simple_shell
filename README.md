@@ -82,7 +82,7 @@ flowchart TD
 	M --> N{Is Command found?};
 	N -- Yes --> O(Execute Command);
 	N -- No --> P(Print Error);
-	L --> Q(Main Loop);
+	L -- No --> Q(Main Loop);
 	O --> Q;
 	P --> Q;
 	I --> R(Exit Shell);
@@ -90,7 +90,7 @@ flowchart TD
 
 subgraph Built-ins
 direction LR
-	L --> S{Is exit?};
+	L -- Yes --> S{Is exit?};
 	S -- Yes --> R;
 	S -- No --> T{Is env?};
 	T -- Yes --> U(Print Environment);
