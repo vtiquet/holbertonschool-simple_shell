@@ -11,7 +11,7 @@ This project is a custom implementation of a simple UNIX command line interprete
 ## Table of Contents
 - [Project Description](#-project-description)
 - [Requirements](#-requirements)
-- [Flowchart & Snippets](#-flowchart-&-snippets)
+- [Flowchart and Snippets](#-flowchart-and-snippets)
 - [Features](#-features)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
@@ -60,7 +60,7 @@ The project uses a specific set of allowed functions, including those for memory
 
 -----
 
-## 📊 Flowchart & Snippets
+## 📊 Flowchart and Snippets
 
 ### Flowchart
 
@@ -174,7 +174,7 @@ $
 
 ## 📦 Project Structure
 
-  - [README.md](https://github.com/vtiquet/holbertonschool-printf/blob/main/_printf.c): This file, providing an overview of the project.
+  - [README.md](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/README.md): This file, providing an overview of the project.
   - [man_1_simple_shell.1](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/man_1_simple_shell.1): A man page for the custom shell.
   - [AUTHORS](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/AUTHORS): A file listing all contributors to the project.
   - [builtins.c](https://github.com/vtiquet/holbertonschool-simple_shell/blob/main/builtins.c): A file that implement the built-in functionality of the shell.
